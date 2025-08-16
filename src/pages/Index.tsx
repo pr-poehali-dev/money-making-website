@@ -3,29 +3,133 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import Icon from "@/components/ui/icon";
+import AnimatedCounter from "@/components/AnimatedCounter";
+import CaseModal from "@/components/CaseModal";
+import { useState } from "react";
 
 const Index = () => {
+  const [selectedCase, setSelectedCase] = useState<any>(null);
+  const [isCaseModalOpen, setIsCaseModalOpen] = useState(false);
+
   const cases = [
     {
       client: "IT Консалтинг",
       revenue: "150,000₽",
       growth: "+287%",
       period: "3 месяца",
-      description: "Запуск автоматизированной воронки продаж"
+      description: "Запуск автоматизированной воронки продаж",
+      industry: "IT",
+      challenge: "Низкая конверсия в продажах, отсутствие автоматизации процессов, высокая стоимость привлечения клиентов",
+      solution: "Внедрили CRM-систему, настроили email-маркетинг, создали воронку продаж с автоматическими триггерами",
+      results: [
+        "Увеличение конверсии с 2% до 8%",
+        "Снижение стоимости лида на 65%",
+        "Автоматизация 80% процессов продаж",
+        "Рост выручки в 3.8 раза"
+      ],
+      chartData: [
+        { month: "Янв", revenue: 45000 },
+        { month: "Фев", revenue: 68000 },
+        { month: "Мар", revenue: 95000 },
+        { month: "Апр", revenue: 150000 }
+      ],
+      timeline: [
+        {
+          phase: "Аудит и анализ",
+          duration: "2 недели",
+          activities: ["Анализ текущих процессов", "Выявление узких мест", "Разработка стратегии"]
+        },
+        {
+          phase: "Настройка системы",
+          duration: "3 недели",
+          activities: ["Внедрение CRM", "Настройка воронки", "Интеграция сервисов"]
+        },
+        {
+          phase: "Запуск и оптимизация",
+          duration: "8 недель",
+          activities: ["A/B тестирование", "Мониторинг метрик", "Постоянная оптимизация"]
+        }
+      ]
     },
     {
       client: "E-commerce проект", 
       revenue: "340,000₽",
       growth: "+450%",
       period: "6 месяцев", 
-      description: "Масштабирование через контекстную рекламу"
+      description: "Масштабирование через контекстную рекламу",
+      industry: "E-commerce",
+      challenge: "Ограниченный рекламный бюджет, низкий ROAS, неэффективные кампании в Google Ads и Яндекс.Директ",
+      solution: "Провели глубокую аналитику, пересобрали семантику, настроили умные кампании и автоматические стратегии",
+      results: [
+        "ROAS вырос с 150% до 680%",
+        "Снижение CPC на 45%",
+        "Увеличение трафика в 4 раза",
+        "Рост конверсии до 12%"
+      ],
+      chartData: [
+        { month: "Янв", revenue: 75000 },
+        { month: "Фев", revenue: 120000 },
+        { month: "Мар", revenue: 180000 },
+        { month: "Апр", revenue: 250000 },
+        { month: "Май", revenue: 310000 },
+        { month: "Июн", revenue: 340000 }
+      ],
+      timeline: [
+        {
+          phase: "Аудит рекламы",
+          duration: "1 неделя",
+          activities: ["Анализ текущих кампаний", "Проверка настроек", "Оценка конкурентов"]
+        },
+        {
+          phase: "Пересборка кампаний",
+          duration: "2 недели",
+          activities: ["Новая структура аккаунта", "Расширение семантики", "Настройка автостратегий"]
+        },
+        {
+          phase: "Масштабирование",
+          duration: "20 недель",
+          activities: ["Увеличение бюджетов", "Запуск новых направлений", "Оптимизация воронки"]
+        }
+      ]
     },
     {
       client: "Образовательная платформа",
       revenue: "220,000₽", 
       growth: "+320%",
       period: "4 месяца",
-      description: "Создание экспертного личного бренда"
+      description: "Создание экспертного личного бренда",
+      industry: "Образование",
+      challenge: "Отсутствие узнаваемости эксперта, низкий чек за услуги, нет постоянного потока клиентов",
+      solution: "Построили личный бренд через контент-маркетинг, запустили авторские курсы, создали комьюнити",
+      results: [
+        "Рост среднего чека в 8 раз",
+        "Постоянная база из 2000+ подписчиков",
+        "50+ корпоративных клиентов",
+        "Запись на 3 месяца вперед"
+      ],
+      chartData: [
+        { month: "Янв", revenue: 55000 },
+        { month: "Фев", revenue: 95000 },
+        { month: "Мар", revenue: 160000 },
+        { month: "Апр", revenue: 220000 }
+      ],
+      timeline: [
+        {
+          phase: "Позиционирование",
+          duration: "2 недели",
+          activities: ["Определение ниши", "Создание УТП", "Разработка стратегии контента"]
+        },
+        {
+          phase: "Контент-план",
+          duration: "3 недели",
+          activities: ["Запуск блога", "Активность в соцсетях", "Выступления на мероприятиях"]
+        },
+        {
+          phase: "Монетизация",
+          duration: "12 недель",
+          activities: ["Запуск курсов", "Консультации", "Корпоративное обучение"]
+        }
+      ]
     }
   ];
 
@@ -120,15 +224,26 @@ const Index = () => {
               </div>
               <div className="grid grid-cols-3 gap-4 pt-8">
                 <div className="text-center">
-                  <div className="text-2xl font-montserrat font-bold text-primary">150+</div>
+                  <AnimatedCounter 
+                    endValue={150} 
+                    suffix="+"
+                    className="text-2xl font-montserrat font-bold text-primary"
+                  />
                   <div className="text-sm text-muted-foreground">Клиентов</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-montserrat font-bold text-primary">98%</div>
+                  <AnimatedCounter 
+                    endValue={98} 
+                    suffix="%"
+                    className="text-2xl font-montserrat font-bold text-primary"
+                  />
                   <div className="text-sm text-muted-foreground">Результат</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-montserrat font-bold text-primary">4.9</div>
+                  <AnimatedCounter 
+                    endValue={4.9} 
+                    className="text-2xl font-montserrat font-bold text-primary"
+                  />
                   <div className="text-sm text-muted-foreground">Рейтинг</div>
                 </div>
               </div>
@@ -209,7 +324,14 @@ const Index = () => {
                 <CardContent>
                   <p className="text-muted-foreground mb-4">{caseItem.description}</p>
                   <div className="flex items-center justify-between">
-                    <Button variant="outline" size="sm">
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => {
+                        setSelectedCase(caseItem);
+                        setIsCaseModalOpen(true);
+                      }}
+                    >
                       Подробности
                     </Button>
                     <div className="flex items-center space-x-2">
@@ -445,6 +567,15 @@ const Index = () => {
           </div>
         </div>
       </footer>
+
+      {/* Case Modal */}
+      {selectedCase && (
+        <CaseModal 
+          isOpen={isCaseModalOpen}
+          onClose={() => setIsCaseModalOpen(false)}
+          caseData={selectedCase}
+        />
+      )}
     </div>
   );
 };
